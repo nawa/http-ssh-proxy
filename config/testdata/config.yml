@@ -1,0 +1,14 @@
+app-port: 8080
+start-page: master
+hosts:
+    master:
+        address: 1.1.1.1:8080
+    worker-1:
+        address: 2.2.2.2:8081
+        forwarding:
+            private-key: /path/to/private_key.pem
+            password: #in case of password
+            server: 3.3.3.3:22
+            user: ssh-user
+    worker-2:
+        address: 4.4.4.4:4040

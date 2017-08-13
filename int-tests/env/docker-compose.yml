@@ -1,0 +1,29 @@
+server1:
+  image: golang:alpine
+  volumes:
+    - ./:/go/src/app
+  hostname: server1-host-name
+  ports:
+    - "9091:8080"
+  working_dir: /go/src/app
+  command: go run server1/server1.go
+
+server2:
+  image: golang:alpine
+  volumes:
+    - ./:/go/src/app
+  hostname: server2-host-name
+  working_dir: /go/src/app
+  command: go run server2/server2.go
+
+ssh-gateway:
+  image: tutum/debian:jessie
+  environment:
+    AUTHORIZED_KEYS: >
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCsbJuiHFyZ2Ec6++QStAZ3lKSoKEYbaTcfpzAbELwyvtOf4t8mMdvBbLoP6ctMTrO9GuFX6RsC5m1xsgkaFHVGrqWHEtKEy0PreZCp30QdswEn5cmeGy2RBpy63/deU3Dxi6L+vxG+iI7P6/bHi7EN457h5sEUZ37ElT3xztvFic8P6ULPUjaxa5VjE7zL1iVb1pDDTuw6dfdkLFSy6d9r/hlS9A5zFsr28RsZu/kz57kP3LX8VIeea3wwi4p3JmAtNCqOY4uVFd3pm9zGzB5zHLAGnEnEj8H4BVtKJrFNtrmfiuTBShAxVbEAfqKxrYl/kV38CFLdd1q2Vpz6smTodGwDy3Fq9P+7yPal2dBPKLNoUBf4OEMUOxsUPB3uxXXHaV3ftURrjmGDNwuRR5WElasMmjdDn4kGpeclD3DeNsTW2lhGbfVQC83eYk0NcAtwolZM3rzzmtuDKSxR5bycRO8ytVO92TKFdY1Tb7W+DFBj1qhlgdI9E9RWRVsAeWOODS9s60auv5iyOFHx0djKzjGoJV1r75mUK7F5nrQoaL6gwMLaFBeBnWoEbHS0Gx4Td2bRxHlWbWsdEqRvtcjpsBPS9l6tBZQ/ekS3rIafLor6iD/Qp57DW8YudBQdV+ATOOf3NqCa2iEo9OgTYGbRaHXOwHIgWyqoDV3IPrtnTw== navatski@gmail.com
+    ROOT_PASS: root
+  ports:
+    - "2222:22"
+  links: 
+    - server1
+    - server2

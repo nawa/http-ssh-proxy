@@ -1,0 +1,17 @@
+app-port: 8888
+start-page: server1
+hosts:
+    server1:
+        address: server1-host-name:8080
+        forwarding:
+            user: root
+            private-key: id_rsa
+            server: localhost:2222
+    server2:
+        address: server2-host-name:8080
+        forwarding:
+            user: root
+            password: root
+            server: localhost:2222
+    server3:
+            address: localhost:9091
